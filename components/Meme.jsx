@@ -41,6 +41,14 @@ export default function Meme() {
             [name]: value
         }))
     }
+
+    function handleImageChange(event) {
+        const {name, value} = event.target
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
+    }
     
     return (
         <main>
@@ -60,6 +68,14 @@ export default function Meme() {
                     name="bottomText"
                     value={meme.bottomText}
                     onChange={handleChange}
+                />
+                <input 
+                  type="url"
+                  placeholder="Image URL"
+                  className="form--input url"
+                  name="randomImage"
+                  value={meme.randomImage}
+                  onChange={handleImageChange}
                 />
                 <button 
                     className="form--button"
