@@ -4,7 +4,7 @@ export default function Meme() {
     const [meme, setMeme] = React.useState({
         topText: "",
         bottomText: "",
-        randomImage: "http://i.imgflip.com/1bij.jpg" 
+        randomImage: "https://mediadatabase.cdn.bugatti-newsroom.com/d/YZiKD3Ea/" 
     })
     const [allMemes, setAllMemes] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(false)
@@ -48,6 +48,54 @@ export default function Meme() {
         }))
     }
     
+    function handleDownload() {
+        const memeContainer = document.querySelector(".meme")
+        if (!memeContainer) return
+        
+        // Create a canvas element
+        const canvas = document.createElement("canvas")
+        const ctx = canvas.getContext("2d")
+        
+        // Create a new image to get the actual dimensions
+        const img = new Image()
+        img.crossOrigin = "anonymous"  // Enable cross-origin image loading
+        img.src = meme.randomImage
+        
+        img.onload = () => {
+            // Set canvas dimensions to match the image
+            canvas.width = img.width
+            canvas.height = img.height
+            
+            // Draw the image
+            ctx.drawImage(img, 0, 0)
+            
+            // Configure text style
+            ctx.fillStyle = "white"
+            ctx.strokeStyle = "black"
+            ctx.lineWidth = Math.min(8, Math.max(2, img.width * 0.004))  // Responsive stroke width with min/max limits
+            ctx.font = `${img.height * 0.1}px impact`  // Responsive font size
+            ctx.textAlign = "center"
+            
+            // Add top text
+            if (meme.topText) {
+                ctx.fillText(meme.topText.toUpperCase(), img.width / 2, img.height * 0.1)
+                ctx.strokeText(meme.topText.toUpperCase(), img.width / 2, img.height * 0.1)
+            }
+            
+            // Add bottom text
+            if (meme.bottomText) {
+                ctx.fillText(meme.bottomText.toUpperCase(), img.width / 2, img.height * 0.9)
+                ctx.strokeText(meme.bottomText.toUpperCase(), img.width / 2, img.height * 0.9)
+            }
+            
+            // Create download link
+            const link = document.createElement("a")
+            link.download = "my-meme.png"
+            link.href = canvas.toDataURL("image/png")
+            link.click()
+        }
+    }
+
     return (
         <main>
             <div className="form">
@@ -81,6 +129,13 @@ export default function Meme() {
                     disabled={isLoading || error}
                 >
                     {isLoading ? "Loading..." : "Get a new meme image 🪄"}
+                </button>
+                <button 
+                    className="form--button download-button"
+                    onClick={handleDownload}
+                    disabled={isLoading || error}
+                >
+                    Download Meme 💾
                 </button>
             </div>
             {error && <p className="error-message">Error: {error}</p>}

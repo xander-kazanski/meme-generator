@@ -83,6 +83,10 @@ main {
   transition: opacity 0.2s ease;
 }
 
+.download-button {
+  background: linear-gradient(90.41deg, #1F8D71 1.14%, #18DAA8 100%);
+}
+
 .form--button:hover {
   opacity: 0.9;
 }
