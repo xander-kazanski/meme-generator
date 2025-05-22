@@ -6,19 +6,20 @@ body {
   font-family: "Karla", sans-serif;
   margin: 0;
   background-color: #E5E5E5;
-  /* justify-content: center;  */
-  /* /* display: flex; */
+  min-height: 100vh;
 }
 
 main {
-  padding: 2.25em;
-  min-width: 23.4375em;
+  padding: clamp(1rem, 5vw, 2.25em);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   background-color: #fff;
 }
 
 .header {
   background-color: #fff;
-  min-width: 23.4375em;
+  width: 100%;
   display: flex;
   align-items: center;
   height: 4.0625em;
@@ -30,55 +31,86 @@ main {
 .header--image {
   height: 100%;
   margin-right: 0.375em;
+  object-fit: contain;
 }
 
 .header--title {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   margin-right: auto;
 }
 
 .header--project {
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, 3vw, 0.75rem);
   font-weight: 500;
 }
 
 .form {
   display: grid;
-  grid-template: 2.5em 2.5em / 1fr 1fr;
+  grid-template: auto auto / 1fr 1fr;
   gap: 1.0625em;
   margin-bottom: 1.0625em;
+}
+
+@media (max-width: 480px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form--input {
   font-family: "Karla", sans-serif;
   border-radius: 0.3125em;
   border: 0.0625em solid #D5D4D8;
-  text-indent: 0.3125em;
+  padding: 0.5em;
+  font-size: 1rem;
   width: 100%;
 }
 
 .form--input.url {
-  grid-column: 1 / 3;
+  grid-column: 1 / -1;
 }
 
 .form--button {
-  grid-column: 1 / 3;
-  height: 3.125em;
+  grid-column: 1 / -1;
+  padding: 0.75em;
   font-family: "Karla", sans-serif;
+  font-size: 1rem;
   border-radius: 0.3125em;
   background: linear-gradient(90.41deg, #711F8D 1.14%, #A818DA 100%);
   color: white;
   border: none;
   cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.form--button:hover {
+  opacity: 0.9;
+}
+
+.form--button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #dc3545;
+  text-align: center;
+  margin: 1em 0;
+  padding: 0.5em;
+  border-radius: 0.3125em;
+  background-color: #fde8e8;
 }
 
 .meme {
   position: relative;
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 .meme--image {
   width: 100%;
   border-radius: 0.1875em;
+  display: block;
 }
 
 .meme--text {
@@ -90,7 +122,7 @@ main {
   margin: 0.9375em 0;
   padding: 0 0.3125em;
   font-family: impact, sans-serif;
-  font-size: 2em;
+  font-size: clamp(1.5em, 5vw, 2em);
   text-transform: uppercase;
   color: white;
   letter-spacing: 0.0625em;
